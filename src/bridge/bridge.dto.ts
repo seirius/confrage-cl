@@ -9,7 +9,7 @@ export interface IStoreArgs {
 export interface IRetrieveArgs {
     envName: string;
     path?: string;
-    type?: string;
+    filename?: string;
 }
 
 export interface IPushFileData {
@@ -18,4 +18,10 @@ export interface IPushFileData {
     path?: string;
     file: string;
     type?: string;
+}
+
+export interface IPullFileData {
+    envName: string;
+    filename: string;
+    path?: string;
 }

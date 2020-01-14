@@ -2,7 +2,7 @@
 
 import commandLineArgs from "command-line-args";
 import { COMMANDS, COMMAND_DEFINITIONS } from "./consts/commands";
-import "colors";
+import colors from "colors/safe";
 import { HelpError } from "./errors/help-error";
 import { BridgeService } from "./bridge/bridge.service";
 
@@ -16,8 +16,8 @@ async function run() {
 
         if (!(command in COMMANDS)) {
             throw new HelpError([
-                `${command.bgGreen} command is not valid`.red,
-                "Try with some of these ".yellow + Object.keys(COMMANDS).join(", ").bgGreen,
+                colors.red(`${command.bgGreen} command is not valid`),
+                colors.yellow("Try with some of these ") + colors.bgGreen(Object.keys(COMMANDS).join(", ")),
             ]);
         }
 
@@ -26,10 +26,19 @@ async function run() {
         const {env, path, file, type} = commandLineArgs(COMMAND_DEFINITIONS, {argv});
         switch (command) {
             case "push":
-            await bridgeService.pushFileData({
-                currentDirectory: process.cwd(),
-                env, path, file, type,
-            });
+                await bridgeService.pushFileData({
+                    currentDirectory: process.cwd(),
+                    env, path, file, type,
+                });
+                break;
+
+            case "pull":
+                await bridgeService.pullFileData({
+                    envName: env,
+                    filename: file,
+                    path,
+                });
+                break;
         }
     } catch (error) {
         showError(error);
