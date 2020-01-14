@@ -4,7 +4,8 @@
   "description": "Configuration storage client",
   "main": "dist/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "linstall": "tsc && npm install -g"
   },
   "repository": {
     "type": "git",
@@ -23,14 +24,16 @@
   "homepage": "https://github.com/seirius/confrage-cl#readme",
   "dependencies": {
     "axios": "^0.19.1",
+    "colors": "^1.4.0",
     "command-line-args": "^5.1.1"
   },
   "devDependencies": {
     "@types/command-line-args": "^5.0.0",
     "@types/node": "^13.1.6",
+    "form-data": "^3.0.0",
     "typescript": "^3.7.4"
   },
   "bin": {
-    "confidir": "./dist/index.js"
+    "confrage": "./dist/index.js"
   }
 }
