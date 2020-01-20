@@ -16,14 +16,14 @@ async function run() {
 
         if (!(command in COMMANDS)) {
             throw new HelpError([
-                colors.red(`${command.bgGreen} command is not valid`),
+                colors.red(`${colors.bgGreen(command)} command is not valid`),
                 colors.yellow("Try with some of these ") + colors.bgGreen(Object.keys(COMMANDS).join(", ")),
             ]);
         }
 
         const bridgeService = new BridgeService();
 
-        const {env, path, file, type} = commandLineArgs(COMMAND_DEFINITIONS, {argv});
+        const {env, path, file, type, output_dir} = commandLineArgs(COMMAND_DEFINITIONS, {argv});
         switch (command) {
             case "push":
                 await bridgeService.pushFileData({
@@ -34,9 +34,11 @@ async function run() {
 
             case "pull":
                 await bridgeService.pullFileData({
+                    currentDirectory: process.cwd(),
                     envName: env,
                     filename: file,
                     path,
+                    outputDir: output_dir,
                 });
                 break;
         }

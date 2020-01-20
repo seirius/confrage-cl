@@ -30,4 +30,9 @@ export const COMMAND_DEFINITIONS: OptionDefinition[] = [
         alias: "t",
         type: String,
     },
+    {
+        name: "output_dir",
+        alias: "o",
+        type: String,
+    },
 ];

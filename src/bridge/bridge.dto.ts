@@ -21,7 +21,9 @@ export interface IPushFileData {
 }
 
 export interface IPullFileData {
+    currentDirectory: string;
     envName: string;
     filename: string;
     path?: string;
+    outputDir?: string;
 }

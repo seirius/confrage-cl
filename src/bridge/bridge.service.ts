@@ -32,9 +32,16 @@ export class BridgeService {
         await this.bridge.store({data, filename: basename(file), envName: env, path, type});
     }
 
-    public async pullFileData({envName, filename, path}: IPullFileData): Promise<void> {
+    public async pullFileData({currentDirectory, envName, filename, path, outputDir}: IPullFileData): Promise<void> {
+        if (!envName) {
+            envName = currentDirectory.match(/([^\/]*)\/*$/)[1];
+        }
         const data = await this.bridge.retrieve({envName, path, filename});
-        await promises.writeFile(join(path ? path : "", filename), data);
+        const finalPath = outputDir ? outputDir : path ? path : "";
+        if (finalPath) {
+            await promises.mkdir(finalPath, {recursive: true});
+        }
+        await promises.writeFile(join(finalPath, filename), data);
     }
 
 }

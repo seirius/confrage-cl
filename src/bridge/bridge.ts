@@ -3,6 +3,8 @@ import { IStoreArgs, IRetrieveArgs } from "./bridge.dto";
 import { HelpError } from "./../errors/help-error";
 import FormData from "form-data";
 import colors from "colors/safe";
+import { resolve } from "url";
+import { ApiConfig } from "./../config/api.config";
 
 export class Bridge {
 
@@ -16,7 +18,7 @@ export class Bridge {
         if (type) {
             formData.append("type", type);
         }
-        const { status } = await Axios.post("http://localhost/storage/file-data", formData, {
+        const { status } = await Axios.post(resolve(ApiConfig.HOST, "/storage/file-data"), formData, {
             headers: formData.getHeaders(),
             maxContentLength: Infinity,
         });
@@ -26,9 +28,10 @@ export class Bridge {
     }
 
     public async retrieve({ envName, path, filename }: IRetrieveArgs): Promise<Buffer> {
-        const { status, data } = await Axios.get("http://localhost/storage/file-data", {
+        const { status, data } = await Axios.get(resolve(ApiConfig.HOST, "/storage/file-data"), {
             params: { envName, path, filename },
             responseType: "blob",
+            transformResponse: [],
         });
         if (status === 404) {
             throw new HelpError(colors.bgYellow("File wasn't found"));
