@@ -26,4 +26,26 @@ export interface IPullFileData {
     filename: string;
     path?: string;
     outputDir?: string;
+    print?: boolean;
+}
+
+export interface IEnv {
+    id: number;
+    name: string;
+}
+
+export interface ILsEnvsResponse {
+    items: IEnv[];
+}
+
+export interface IFileData {
+    id: number;
+    path?: string;
+    type: string;
+    filename: string;
+    env: IEnv;
+}
+
+export interface ILsFileDataResponse {
+    items: IFileData[];
 }

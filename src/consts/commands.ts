@@ -7,6 +7,12 @@ export const COMMANDS = {
     pull: {
         description: "Pulls the file from the server",
     },
+    ls: {
+        description: "Lists files or environments stored in the server",
+    },
+    delete: {
+        description: "Deletes an environment (and all of it's data) or an file data",
+    },
 };
 
 export const COMMAND_DEFINITIONS: OptionDefinition[] = [
@@ -34,5 +40,15 @@ export const COMMAND_DEFINITIONS: OptionDefinition[] = [
         name: "output_dir",
         alias: "o",
         type: String,
+    },
+    {
+        name: "envs",
+        alias: "s",
+        type: String,
+    },
+    {
+        name: "print",
+        alias: "r",
+        type: Boolean,
     },
 ];

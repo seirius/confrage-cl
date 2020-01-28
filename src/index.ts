@@ -23,23 +23,28 @@ async function run() {
 
         const bridgeService = new BridgeService();
 
-        const {env, path, file, type, output_dir} = commandLineArgs(COMMAND_DEFINITIONS, {argv});
+        const {env, path, file, type, output_dir, envs, print} = commandLineArgs(COMMAND_DEFINITIONS, {argv});
+        const currentDirectory = process.cwd();
         switch (command) {
             case "push":
-                await bridgeService.pushFileData({
-                    currentDirectory: process.cwd(),
-                    env, path, file, type,
-                });
+                await bridgeService.pushFileData({ currentDirectory, env, path, file, type });
                 break;
 
             case "pull":
                 await bridgeService.pullFileData({
-                    currentDirectory: process.cwd(),
+                    currentDirectory,
                     envName: env,
                     filename: file,
                     path,
                     outputDir: output_dir,
+                    print,
                 });
+                break;
+            case "ls":
+                await bridgeService.ls({ currentDirectory, env, file, type, path, envs });
+                break;
+            case "delete":
+                await bridgeService.delete({ currentDirectory, env, filename: file, path });
                 break;
         }
     } catch (error) {
@@ -58,15 +63,3 @@ function showError(error: Error) {
 }
 
 run();
-
-/* second - parse the merge command options */
-// if (mainOptions.command === "merge") {
-//     const mergeDefinitions = [
-//         { name: "squash", type: Boolean },
-//         { name: "message", alias: "m" }
-//     ]
-//     const mergeOptions = commandLineArgs(mergeDefinitions, { argv });
-
-//     console.log("\nmergeOptions\n============")
-//     console.log(mergeOptions)
-// }
