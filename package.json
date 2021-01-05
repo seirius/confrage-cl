@@ -23,7 +23,7 @@
   },
   "homepage": "https://github.com/seirius/confrage-cl#readme",
   "dependencies": {
-    "axios": "^0.19.1",
+    "axios": "^0.21.1",
     "colors": "^1.4.0",
     "command-line-args": "^5.1.1",
     "dotenv": "^8.2.0",
